@@ -1,0 +1,23 @@
+{
+    "name": "antares1610/codebase",
+    "description": "CodeBase Template",
+    "authors": [
+        {
+            "name": "Antares1610",
+            "email": "harishariyanto285@yahoo.com"
+        }
+    ],
+    "require": {},
+    "extra": {
+    	"laravel": {
+    		"providers": [
+    			"Antares1610\\Origin\\Providers\\CodebaseServiceProvider"
+    		]
+    	}
+    },
+    "autoload": {
+    	"psr-4": {
+    		"Antares1610\\Codebase\\": "src"
+    	}
+    }
+}
