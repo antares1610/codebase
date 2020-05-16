@@ -11,7 +11,7 @@
     "extra": {
     	"laravel": {
     		"providers": [
-    			"Antares1610\\Origin\\Providers\\CodebaseServiceProvider"
+    			"Antares1610\\Codebase\\Providers\\CodebaseServiceProvider"
     		]
     	}
     },
