@@ -20,7 +20,7 @@
 			<x-form-group-text type="password" label="Konfirmasi Password" name="password_confirmation" id="fieldPasswordConfirmation" :message="$errors->first('password_confirmation')"/>
 
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Simpan</button>
+				<button type="submit" class="btn btn-alt-primary">Simpan</button>
 			</div>
 		</form>
 	</x-code-base-block>

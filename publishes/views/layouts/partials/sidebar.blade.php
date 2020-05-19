@@ -102,13 +102,71 @@
 					</li>
 
 					<li>
-						<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Pengaturan</span></a>
+						<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Pengaturan Akun</span></a>
 						<ul>
 							<li>
 								<a href="{{ route('account.password') }}">Ganti Password</a>
 							</li>
 						</ul>
 					</li>
+
+					@can('access', 'admin')
+						<li class="nav-main-heading">
+							<span class="sidebar-mini-visible">AD</span>
+							<span class="sidebar-mini-hidden">Admin</span>
+						</li>
+
+						@if (Gate::allows('access', 'users.index') || Gate::allows('access', 'users.create'))
+							<li>
+								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-users"></i><span class="sidebar-mini-hide">Pengguna</span></a>
+								<ul>
+									@can('access', 'users.index')
+										<li>
+											<a href="{{ route('users.index') }}">Daftar Pengguna</a>
+										</li>
+									@endcan
+
+									@can('access', 'users.create')
+										<li>
+											<a href="{{ route('users.create') }}">Buat Pengguna</a>
+										</li>
+									@endcan
+								</ul>
+							</li>
+						@endif
+
+						@if (Gate::allows('access', 'roles.index') || Gate::allows('access', 'roles.create'))
+							<li>
+								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-users"></i><span class="sidebar-mini-hide">Roles</span></a>
+								<ul>
+									@can('access', 'roles.index')
+										<li>
+											<a href="{{ route('roles.index') }}">Daftar Roles</a>
+										</li>
+									@endcan
+
+									@can('access', 'roles.create')
+										<li>
+											<a href="{{ route('roles.create') }}">Buat Role</a>
+										</li>
+									@endcan
+								</ul>
+							</li>
+						@endif
+
+						@can('access', 'settings')
+							<li>
+								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Pengaturan Aplikasi</span></a>
+								<ul>
+									@foreach (App\Setting::orderBy('position', 'asc')->get() as $setting)
+										<li>
+											<a href="{{ route('settings.edit', ['setting' => $setting]) }}">{{ $setting->name }}</a>
+										</li>
+									@endforeach
+								</ul>
+							</li>
+						@endcan
+					@endcan
 				</ul>
 			</div>
 			<!-- END Side Navigation -->
