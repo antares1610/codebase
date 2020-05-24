@@ -1,0 +1,16 @@
+@extends('layouts.app')
+
+@section('page_title', 'Detail {{display_name}}')
+
+@section('content')
+	<x-breadcrumb :links="$breadcrumb"/>
+	<x-code-base-block title="Detail {{display_name}}">
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped table-hover font-w600">
+				<tbody>
+					{{details}}		
+				</tbody>
+			</table>
+		</div>
+	</x-code-base-block>
+@endsection

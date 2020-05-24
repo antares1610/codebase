@@ -1,0 +1,13 @@
+@extends('layouts.app')
+
+@section('page_title', 'Edit {{display_name}}')
+
+@section('content')
+	<x-breadcrumb :links="$breadcrumb"/>
+	<x-code-base-block title="Edit {{display_name}}">
+		<form action="{{ route('{{name_snake_plural}}.update', ['{{name_snake}}' => ${{name_snake}}]) }}" method="POST" enctype="multipart/form-data" class="mb-2">
+			@method('PUT')
+			@include('apps.{{name_snake_plural}}.partials.form', ['{{name_snake}}' => ${{name_snake}}])
+		</form>
+	</x-code-base-block>
+@endsection

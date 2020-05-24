@@ -25,6 +25,7 @@ class CodebaseServiceProvider extends ServiceProvider
     {
         $this->publishes([
         	__DIR__ . '/../publishes/views' 	=> resource_path('views'),
+        	__DIR__ . '/../publishes/stubs' 	=> resource_path('stubs'),
         	__DIR__ . '/../publishes/public' 	=> public_path(),
         	__DIR__ . '/../publishes/app' 		=> app_path()
         ]);

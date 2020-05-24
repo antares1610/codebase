@@ -1,0 +1,104 @@
+@extends('layouts.app')
+
+@section('page_title', '{{display_name}}')
+
+@section('content')
+	<x-breadcrumb :links="$breadcrumb"/>
+	<x-code-base-block title="{{display_name}}" class="block-content-full">
+
+		@can('access', '{{name_snake_plural}}.create')
+			<div class="text-right">
+				<a href="{{ route('{{name_snake_plural}}.create') }}" class="btn btn-alt-primary">Buat {{display_name}} Baru</a>
+			</div>
+			<hr>
+		@endcan
+
+		@if (session('success'))
+			<x-alert type="success">
+				{{ session('success') }}
+			</x-alert>
+		@endif
+
+		@if (session('danger'))
+			<x-alert type="danger">
+				{{ session('danger') }}
+			</x-alert>
+		@endif
+
+		@if (${{name_snake_plural}})
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover font-w600" id="{{name_snake_plural}}_index">
+					<thead class="thead-light">
+						<tr>
+							{{table_heads}}
+							<th>Menu</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (${{name_snake_plural}} as ${{name_snake}})
+							<tr>
+								{{table_cols}}
+								<td>
+									@can('access', '{{name_snake_plural}}.show')
+										<a href="{{ route('{{name_snake_plural}}.show', ['{{name_snake}}' => ${{name_snake}}]) }}" class="btn btn-alt-primary btn-sm">Detail</a>
+									@endcan
+
+									@can('access', '{{name_snake_plural}}.edit')
+										<a href="{{ route('{{name_snake_plural}}.edit', ['{{name_snake}}' => ${{name_snake}}]) }}" class="btn btn-alt-primary btn-sm">Edit</a>
+									@endcan
+
+									@can('access', '{{name_snake_plural}}.destroy')
+										<button class="btn btn-alt-danger btn-sm" data-id="{{ ${{name_snake}}->id }}" data-name="{{ ${{name_snake}}->name }}" data-action="{{ route('{{name_snake_plural}}.destroy', ['{{name_snake}}' => ${{name_snake}}]) }}">Hapus</button>
+									@endcan
+								</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+		@endif
+	</x-code-base-block>
+
+	@can('access', '{{name_snake_plural}}.destroy')
+		<x-modal id="deleteItem" title="Hapus {{display_name}}">
+			<x-code-base-submodal-content id="deleteItem" title="Hapus {{display_name}}">
+				<p>Hapus <b><span id="itemName"></span></b>?</p>
+			</x-code-base-submodal-content>
+			<x-code-base-submodal-footer>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+				<form method="POST" action="#" id="formDeleteItem">
+					@csrf
+					@method('DELETE')
+					<button type="submit" class="btn btn-danger">Hapus</button>
+				</form>
+			</x-code-base-submodal-footer>
+		</x-modal>
+	@endcan
+@endsection
+
+@push('styles')
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+@endpush
+
+@push('scripts')
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#{{name_snake_plural}}_index").DataTable({
+				"columnDefs" : [
+					{ "targets" : -1, "orderable" : false, "searchable" : false }
+				]
+			});
+
+			$("[data-id]").click(function () {
+				var deleteButton = $(this);
+
+				$("#itemName").text(deleteButton.data("name"));
+				$("#formDeleteItem").attr("action", deleteButton.data("action"));
+
+				$("#deleteItem").modal();
+			});
+		});
+	</script>
+@endpush
