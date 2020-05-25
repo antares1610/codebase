@@ -83,29 +83,29 @@
 			<div class="content-side content-side-full">
 				<ul class="nav-main">
 					<li>
-						<a href="{{ route('home') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Beranda</span></a>
+						<a href="{{ route('home') }}" class="{{ Route::currentRouteName() == 'home' ? 'active' : '' }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Beranda</span></a>
 					</li>
 
-					<li>
+					<li class="{{ in_array(Route::currentRouteName(), ['profile.my_profile', 'profile.edit', 'avatar.edit']) ? 'open' : '' }}">
 						<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-user"></i><span class="sidebar-mini-hide">Profil</span></a>
 						<ul>
 							<li>
-								<a href="{{ route('profile.my_profile') }}">Lihat Profil</a>
+								<a href="{{ route('profile.my_profile') }}" class="{{ Route::currentRouteName() == 'profile.my_profile' ? 'active' : '' }}">Lihat Profil</a>
 							</li>
 							<li>
-								<a href="{{ route('profile.edit') }}">Edit Profil</a>
+								<a href="{{ route('profile.edit') }}" class="{{ Route::currentRouteName() == 'profile.edit' ? 'active' : '' }}">Edit Profil</a>
 							</li>
 							<li>
-								<a href="{{ route('avatar.edit') }}">Ganti Avatar</a>
+								<a href="{{ route('avatar.edit') }}" class="{{ Route::currentRouteName() == 'avatar.edit' ? 'active' : '' }}">Ganti Avatar</a>
 							</li>
 						</ul>
 					</li>
 
-					<li>
+					<li class="{{ in_array(Route::currentRouteName(), ['account.password']) ? 'open' : '' }}">
 						<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Pengaturan Akun</span></a>
 						<ul>
 							<li>
-								<a href="{{ route('account.password') }}">Ganti Password</a>
+								<a href="{{ route('account.password') }}" class="{{ Route::currentRouteName() == 'account.password' ? 'active' : '' }}">Ganti Password</a>
 							</li>
 						</ul>
 					</li>
@@ -117,18 +117,18 @@
 						</li>
 
 						@if (Gate::allows('access', 'users.index') || Gate::allows('access', 'users.create'))
-							<li>
+							<li class="{{ in_array(Route::currentRouteName(), ['users.index', 'users.create']) ? 'open' : '' }}">
 								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-users"></i><span class="sidebar-mini-hide">Pengguna</span></a>
 								<ul>
 									@can('access', 'users.index')
 										<li>
-											<a href="{{ route('users.index') }}">Daftar Pengguna</a>
+											<a href="{{ route('users.index') }}" class="{{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}">Daftar Pengguna</a>
 										</li>
 									@endcan
 
 									@can('access', 'users.create')
 										<li>
-											<a href="{{ route('users.create') }}">Buat Pengguna</a>
+											<a href="{{ route('users.create') }}" class="{{ Route::currentRouteName() == 'users.create' ? 'active' : '' }}">Buat Pengguna</a>
 										</li>
 									@endcan
 								</ul>
@@ -136,18 +136,18 @@
 						@endif
 
 						@if (Gate::allows('access', 'roles.index') || Gate::allows('access', 'roles.create'))
-							<li>
+							<li class="{{ in_array(Route::currentRouteName(), ['roles.index', 'roles.create']) ? 'open' : '' }}">
 								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-users"></i><span class="sidebar-mini-hide">Roles</span></a>
 								<ul>
 									@can('access', 'roles.index')
 										<li>
-											<a href="{{ route('roles.index') }}">Daftar Roles</a>
+											<a href="{{ route('roles.index') }}" class="{{ Route::currentRouteName() == 'roles.index' ? 'active' : '' }}">Daftar Roles</a>
 										</li>
 									@endcan
 
 									@can('access', 'roles.create')
 										<li>
-											<a href="{{ route('roles.create') }}">Buat Role</a>
+											<a href="{{ route('roles.create') }}" class="{{ Route::currentRouteName() == 'roles.create' ? 'active' : '' }}">Buat Role</a>
 										</li>
 									@endcan
 								</ul>
@@ -155,12 +155,12 @@
 						@endif
 
 						@can('access', 'settings')
-							<li>
+							<li class="{{ Route::currentRouteName('settings.edit') ? 'open' : '' }}">
 								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Pengaturan Aplikasi</span></a>
 								<ul>
 									@foreach (App\Setting::orderBy('position', 'asc')->get() as $setting)
 										<li>
-											<a href="{{ route('settings.edit', ['setting' => $setting]) }}">{{ $setting->name }}</a>
+											<a href="{{ route('settings.edit', ['setting' => $setting]) }}" class="{{ Request::is('settings/' . $setting->slug) ? 'active' : '' }}">{{ $setting->name }}</a>
 										</li>
 									@endforeach
 								</ul>
