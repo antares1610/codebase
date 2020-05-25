@@ -65,11 +65,10 @@
 				<p>Hapus <b><span id="itemName"></span></b>?</p>
 			</x-code-base-submodal-content>
 			<x-code-base-submodal-footer>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 				<form method="POST" action="#" id="formDeleteItem">
 					@csrf
 					@method('DELETE')
-					<button type="submit" class="btn btn-danger">Hapus</button>
+					<button type="submit" class="btn btn-alt-danger">Hapus</button>
 				</form>
 			</x-code-base-submodal-footer>
 		</x-modal>
