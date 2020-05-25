@@ -155,7 +155,7 @@
 						@endif
 
 						@can('access', 'settings')
-							<li class="{{ Route::currentRouteName('settings.edit') ? 'open' : '' }}">
+							<li class="{{ Route::currentRouteName() == 'settings.edit' ? 'open' : '' }}">
 								<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Pengaturan Aplikasi</span></a>
 								<ul>
 									@foreach (App\Setting::orderBy('position', 'asc')->get() as $setting)
